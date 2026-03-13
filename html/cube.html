@@ -1,0 +1,53 @@
+<!-- cube.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>3D Cube (Drag to Rotate)</title>
+  <link rel="stylesheet" href="../CSS/cube.css" />
+</head>
+<body>
+  <header class="bar">
+    <div class="wrap">
+      <div class="title">3D Cube</div>
+      <div class="hint">Drag to rotate • Scroll not used • Double-click to reset</div>
+      <a class="back" href="index.html">← Back</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="stage" id="stage" aria-label="3D cube stage">
+      <div class="scene">
+        <div class="cube" id="cube">
+          <div class="face front">front</div>
+          <div class="face back">back</div>
+          <div class="face right">right</div>
+          <div class="face left">left</div>
+          <div class="face top">top</div>
+          <div class="face bottom">bottom</div>
+        </div>
+      </div>
+    </div>
+
+    <section class="panel">
+      <div class="row">
+        <button id="btnReset">Reset</button>
+        <label class="slider">
+          <span>Size</span>
+          <input id="size" type="range" min="120" max="360" value="220" />
+        </label>
+        <label class="slider">
+          <span>Perspective</span>
+          <input id="persp" type="range" min="300" max="1400" value="900" />
+        </label>
+      </div>
+      <p class="small">
+        Tip: This is pure HTML/CSS 3D transforms (no WebGL). Great for lightweight “wow” visuals.
+      </p>
+    </section>
+  </main>
+
+  <script src="../Java/cube.js"></script>
+</body>
+</html>
