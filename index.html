@@ -2,592 +2,119 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Student Dashboard (Skeleton)</title>
-  <style>
-    :root { color-scheme: dark; }
-    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; background:#0b0f14; color:#e6edf3; }
-    header { position: sticky; top: 0; z-index: 5; background:#0b0f14; border-bottom:1px solid #1f2a37; padding: 14px 16px; }
-    h1 { margin:0 0 10px; font-size: 16px; font-weight: 800; letter-spacing: .2px; }
-    .tabs { display:flex; flex-wrap:wrap; gap:8px; }
-    .tab { border:1px solid #233041; background:#0f1621; color:#e6edf3; padding:8px 10px; border-radius:10px; cursor:pointer; font-size:13px; }
-    .tab[aria-selected="true"] { background:#162334; border-color:#2b3b52; }
-    main { max-width: 1000px; margin: 0 auto; padding: 16px; }
-    .grid { display:grid; gap:12px; grid-template-columns: 1fr; }
-    @media (min-width: 900px) { .grid.two { grid-template-columns: 1fr 1fr; } }
-    .card { background:#0f1621; border:1px solid #1f2a37; border-radius:14px; padding:14px; }
-    .card h2 { margin:0 0 10px; font-size:14px; }
-    .muted { color:#9fb0c3; font-size:12px; }
-    .row { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
-    input, textarea, select {
-      width:100%; box-sizing:border-box;
-      background:#0b0f14; color:#e6edf3;
-      border:1px solid #233041; border-radius:10px;
-      padding:10px; font-size:14px;
-    }
-    textarea { min-height: 90px; resize: vertical; }
-    button { background:#1a2636; color:#e6edf3; border:1px solid #2b3b52; border-radius:10px; padding:9px 10px; cursor:pointer; font-size:13px; }
-    button:hover { background:#223248; }
-    button.ghost { background:transparent; border-color:#233041; }
-    button.danger { background:#2a1620; border-color:#4b2230; }
-    button.danger:hover { background:#3a1d2a; }
-    .pill { display:inline-flex; align-items:center; gap:6px; padding:4px 8px; border:1px solid #233041; border-radius:999px; background:#0b0f14; font-size:12px; color:#9fb0c3; }
-    .list { margin:10px 0 0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; }
-    .item { display:flex; gap:10px; align-items:flex-start; border:1px solid #1f2a37; border-radius:12px; padding:10px; background:#0b0f14; }
-    .item input[type="checkbox"] { width:18px; height:18px; margin-top:2px; }
-    .item .content { flex:1; }
-    .item .title { margin:0; font-size:14px; }
-    .item .meta { margin-top:2px; font-size:12px; color:#9fb0c3; }
-    .right { margin-left:auto; display:flex; gap:8px; }
-    .hidden { display:none !important; }
-    .toast { position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); background:#0f1621; border:1px solid #233041; padding:10px 12px; border-radius:12px; font-size:13px; max-width: 92vw; }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Personal System</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header>
-    <h1>Student Dashboard <span class="pill">Local</span></h1>
-    <div class="tabs" role="tablist" aria-label="Sections">
-      <button class="tab" role="tab" aria-selected="true" data-tab="home">Home</button>
-      <button class="tab" role="tab" aria-selected="false" data-tab="tasks">Tasks</button>
-      <button class="tab" role="tab" aria-selected="false" data-tab="deadlines">Deadlines</button>
-      <button class="tab" role="tab" aria-selected="false" data-tab="roulette">Study Roulette</button>
-      <button class="tab" role="tab" aria-selected="false" data-tab="review">Weekly Review</button>
-      <button class="tab" role="tab" aria-selected="false" data-tab="settings">Settings</button>
+  <header class="topbar">
+    <div class="wrap">
+      <div class="brand">
+        <div class="logo">⚡</div>
+        <div>
+          <div class="title">My Personal System</div>
+          <div class="subtitle">Pick a module. Run your day.</div>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <button id="btnQuick" class="btn ghost" type="button">Quick Capture</button>
+        <button id="btnTheme" class="btn" type="button">Toggle Theme</button>
+      </div>
     </div>
   </header>
 
-  <main>
-    <!-- HOME -->
-    <section id="tab-home" class="tabpane">
-      <div class="grid two">
-        <div class="card">
-          <h2>Today</h2>
-          <p class="muted" id="todayLine"></p>
-          <div class="row">
-            <span class="pill">Top 3: <strong id="statTop3">0</strong>/3</span>
-            <span class="pill">Tasks: <strong id="statTasks">0</strong></span>
-            <span class="pill">Deadlines: <strong id="statDeadlines">0</strong></span>
-          </div>
-          <div style="height:10px"></div>
-
-          <h2 style="margin-top:0">Top 3 priorities</h2>
-          <div class="row">
-            <input id="top3Text" placeholder="Add a priority (e.g., finish calculus HW)" />
-            <button id="top3Add">Add</button>
-          </div>
-          <ul class="list" id="top3List"></ul>
+  <main class="wrap">
+    <section class="grid">
+      <a class="card" href="student.html">
+        <div class="card-top">
+          <div class="card-icon">🎓</div>
+          <div class="card-title">Student Dashboard</div>
         </div>
-
-        <div class="card">
-          <h2>Quick Capture</h2>
-          <p class="muted">Type a task and hit Enter.</p>
-          <input id="quickTask" placeholder="Add a task..." />
-          <div class="row" style="margin-top:10px">
-            <button id="goTasks">Open Tasks</button>
-            <button id="spinNow" class="ghost">What should I study?</button>
-          </div>
-
-          <div style="height:14px"></div>
-          <h2>Next deadline</h2>
-          <div id="nextDeadline" class="muted">—</div>
+        <div class="card-desc">
+          Top 3 priorities, tasks, deadlines, study roulette, weekly review.
         </div>
+        <div class="card-meta">Open →</div>
+      </a>
+
+      <a class="card" href="gym.html">
+        <div class="card-top">
+          <div class="card-icon">💪</div>
+          <div class="card-title">Gym Tracker</div>
+        </div>
+        <div class="card-desc">
+          PRs, sessions, streaks, notes. Keep score, get stronger.
+        </div>
+        <div class="card-meta">Open →</div>
+      </a>
+
+      <a class="card" href="todo.html">
+        <div class="card-top">
+          <div class="card-icon">✅</div>
+          <div class="card-title">To-do + Today</div>
+        </div>
+        <div class="card-desc">
+          Quick tasks, top focus, and “what next?” helper.
+        </div>
+        <div class="card-meta">Open →</div>
+      </a>
+
+      <a class="card" href="mornings.html">
+        <div class="card-top">
+          <div class="card-icon">🌅</div>
+          <div class="card-title">Mornings Routine</div>
+        </div>
+        <div class="card-desc">
+          Morning checklist + notes. Start the day without thinking.
+        </div>
+        <div class="card-meta">Open →</div>
+      </a>
+
+      <a class="card" href="words.html">
+        <div class="card-top">
+          <div class="card-icon">🗒️</div>
+          <div class="card-title">Words / Quotes</div>
+        </div>
+        <div class="card-desc">
+          Reminders and quotes from Past You to Present You.
+        </div>
+        <div class="card-meta">Open →</div>
+      </a>
+
+      <a class="card disabled" href="#" aria-disabled="true">
+        <div class="card-top">
+          <div class="card-icon">🧩</div>
+          <div class="card-title">Custom Module</div>
+        </div>
+        <div class="card-desc">
+          Placeholder for anything: water tracker, pomodoro, reading log, etc.
+        </div>
+        <div class="card-meta">Coming soon</div>
+      </a>
+    </section>
+
+    <section class="panel">
+      <div class="panel-title">Quick Capture</div>
+      <div class="panel-desc">Add a quick note/task for later. (Local demo storage)</div>
+
+      <div class="row">
+        <input id="quickInput" class="input" placeholder="Type something... (e.g., finish calculus HW)" />
+        <button id="quickSave" class="btn" type="button">Save</button>
+      </div>
+
+      <ul id="quickList" class="list"></ul>
+
+      <div class="row end">
+        <button id="quickClear" class="btn danger" type="button">Clear</button>
       </div>
     </section>
 
-    <!-- TASKS -->
-    <section id="tab-tasks" class="tabpane hidden">
-      <div class="grid two">
-        <div class="card">
-          <h2>Tasks</h2>
-          <div class="row">
-            <input id="taskText" placeholder="Task..." />
-            <select id="taskCourse" style="max-width:220px">
-              <option value="">Course (optional)</option>
-            </select>
-            <button id="taskAdd">Add</button>
-          </div>
-          <ul class="list" id="taskList"></ul>
-          <div class="row" style="margin-top:10px">
-            <button id="taskClearDone" class="danger">Delete done</button>
-            <button id="taskClearAll" class="ghost">Clear all</button>
-          </div>
-        </div>
-
-        <div class="card">
-          <h2>Courses (for filtering + roulette)</h2>
-          <div class="row">
-            <input id="courseText" placeholder="Add a course (e.g., Calculus, CS101)" />
-            <button id="courseAdd">Add</button>
-          </div>
-          <ul class="list" id="courseList"></ul>
-          <p class="muted" style="margin-top:10px">
-            Tip: course list is used by Study Roulette when you have no tasks.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- DEADLINES -->
-    <section id="tab-deadlines" class="tabpane hidden">
-      <div class="grid two">
-        <div class="card">
-          <h2>Deadlines</h2>
-          <div class="row">
-            <input id="dlTitle" placeholder="Deadline title (e.g., Physics Lab Report)" />
-            <input id="dlDate" type="date" style="max-width: 200px;" />
-            <select id="dlCourse" style="max-width:220px">
-              <option value="">Course (optional)</option>
-            </select>
-            <button id="dlAdd">Add</button>
-          </div>
-          <ul class="list" id="dlList"></ul>
-          <div class="row" style="margin-top:10px">
-            <button id="dlClearAll" class="danger">Clear all</button>
-          </div>
-        </div>
-
-        <div class="card">
-          <h2>Countdown</h2>
-          <p class="muted">Closest upcoming deadline.</p>
-          <div id="countdownBox" style="font-size:16px; line-height:1.5">—</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ROULETTE -->
-    <section id="tab-roulette" class="tabpane hidden">
-      <div class="grid two">
-        <div class="card">
-          <h2>Study Roulette</h2>
-          <p class="muted">Picks from your undone tasks first. If none, picks a course.</p>
-          <button id="rouletteSpin">SPIN</button>
-          <div style="margin-top:12px; font-size:16px;">
-            Result: <strong id="rouletteResult">—</strong>
-          </div>
-          <div class="row" style="margin-top:10px">
-            <button id="rouletteMarkDone" class="ghost">Mark chosen task done</button>
-          </div>
-          <p class="muted" style="margin-top:10px">
-            If the result is a course (not a task), you can create a quick task for it.
-          </p>
-        </div>
-
-        <div class="card">
-          <h2>Quick task from result</h2>
-          <div class="row">
-            <input id="rouletteTaskText" placeholder="Task text..." />
-            <button id="rouletteTaskAdd">Add to tasks</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- REVIEW -->
-    <section id="tab-review" class="tabpane hidden">
-      <div class="grid two">
-        <div class="card">
-          <h2>Weekly Review</h2>
-          <p class="muted">Simple prompts. You can expand this later.</p>
-          <textarea id="reviewText" placeholder="What went well this week? What sucked? What’s the plan for next week?"></textarea>
-          <div class="row" style="margin-top:10px">
-            <button id="reviewSave">Save</button>
-            <span id="reviewSaved" class="muted"></span>
-          </div>
-        </div>
-
-        <div class="card">
-          <h2>Stats</h2>
-          <div class="row">
-            <span class="pill">Tasks done: <strong id="statDone">0</strong></span>
-            <span class="pill">Active courses: <strong id="statCourses">0</strong></span>
-          </div>
-          <p class="muted" style="margin-top:10px">
-            Later: add streaks, a 7-day grid, etc.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- SETTINGS -->
-    <section id="tab-settings" class="tabpane hidden">
-      <div class="card">
-        <h2>Data</h2>
-        <p class="muted">Local storage only. No syncing. (Supabase comes later.)</p>
-        <div class="row">
-          <button id="exportBtn">Export JSON</button>
-          <button id="importBtn" class="ghost">Import JSON</button>
-          <button id="wipeBtn" class="danger">Wipe all data</button>
-        </div>
-        <input id="importFile" class="hidden" type="file" accept="application/json" />
-      </div>
-    </section>
+    <footer class="footer">
+      <span class="muted">Tip: press <span class="kbd">/</span> to focus Quick Capture.</span>
+      <span class="muted">Local-only demo. Cloud sync comes later.</span>
+    </footer>
   </main>
 
-  <div id="toast" class="toast hidden"></div>
-
-  <script>
-    // ========= Local State =========
-    const LS_KEY = "student_dash_v1";
-    const uid = () => Math.random().toString(16).slice(2) + Date.now().toString(16);
-    const defaultState = () => ({
-      top3: [],
-      tasks: [],        // {id, text, course, done, createdAt}
-      courses: [],      // {id, name}
-      deadlines: [],    // {id, title, dateISO, course}
-      weeklyReview: ""  // string
-    });
-
-    let state = loadState();
-
-    function loadState() {
-      try {
-        const raw = localStorage.getItem(LS_KEY);
-        if (!raw) return defaultState();
-        return { ...defaultState(), ...JSON.parse(raw) };
-      } catch { return defaultState(); }
-    }
-
-    function saveState() {
-      localStorage.setItem(LS_KEY, JSON.stringify(state));
-      renderAll();
-    }
-
-    const $ = (id) => document.getElementById(id);
-
-    function toast(msg) {
-      const el = $("toast");
-      el.textContent = msg;
-      el.classList.remove("hidden");
-      clearTimeout(toast._t);
-      toast._t = setTimeout(() => el.classList.add("hidden"), 1400);
-    }
-
-    function todayText() {
-      const d = new Date();
-      return d.toLocaleDateString(undefined, { weekday:"long", year:"numeric", month:"short", day:"numeric" });
-    }
-
-    // ========= Tabs =========
-    function setTab(name) {
-      document.querySelectorAll(".tab").forEach(btn => {
-        btn.setAttribute("aria-selected", btn.dataset.tab === name ? "true" : "false");
-      });
-      document.querySelectorAll(".tabpane").forEach(p => p.classList.add("hidden"));
-      $("tab-" + name).classList.remove("hidden");
-      history.replaceState(null, "", "#" + name);
-    }
-
-    document.querySelectorAll(".tab").forEach(btn => btn.addEventListener("click", () => setTab(btn.dataset.tab)));
-    window.addEventListener("load", () => {
-      const hash = location.hash.replace("#", "");
-      if (hash) setTab(hash);
-      $("todayLine").textContent = todayText();
-      renderAll();
-    });
-
-    $("goTasks").onclick = () => setTab("tasks");
-    $("spinNow").onclick = () => { setTab("roulette"); spinRoulette(); };
-
-    // ========= Courses =========
-    $("courseAdd").onclick = () => {
-      const name = $("courseText").value.trim();
-      if (!name) return;
-      state.courses.push({ id: uid(), name });
-      $("courseText").value = "";
-      saveState();
-      toast("Course added.");
-    };
-
-    // ========= Tasks =========
-    $("quickTask").addEventListener("keydown", (e) => {
-      if (e.key === "Enter") addTask($("quickTask").value.trim(), "");
-    });
-
-    $("taskAdd").onclick = () => addTask($("taskText").value.trim(), $("taskCourse").value);
-    $("taskText").addEventListener("keydown", (e) => {
-      if (e.key === "Enter") $("taskAdd").click();
-    });
-
-    function addTask(text, course) {
-      if (!text) return;
-      state.tasks.unshift({ id: uid(), text, course: course || "", done:false, createdAt: Date.now() });
-      $("taskText").value = "";
-      $("quickTask").value = "";
-      saveState();
-      toast("Task added.");
-    }
-
-    $("taskClearDone").onclick = () => { state.tasks = state.tasks.filter(t => !t.done); saveState(); };
-    $("taskClearAll").onclick = () => {
-      if (!confirm("Clear all tasks?")) return;
-      state.tasks = [];
-      saveState();
-    };
-
-    // ========= Top 3 =========
-    $("top3Add").onclick = () => {
-      const text = $("top3Text").value.trim();
-      if (!text) return;
-      if (state.top3.length >= 3) return toast("Top 3 is full.");
-      state.top3.push({ id: uid(), text, done:false });
-      $("top3Text").value = "";
-      saveState();
-    };
-
-    // ========= Deadlines =========
-    $("dlAdd").onclick = () => {
-      const title = $("dlTitle").value.trim();
-      const dateISO = $("dlDate").value;
-      const course = $("dlCourse").value;
-      if (!title || !dateISO) return toast("Need title + date.");
-      state.deadlines.push({ id: uid(), title, dateISO, course: course || "" });
-      $("dlTitle").value = "";
-      $("dlDate").value = "";
-      saveState();
-      toast("Deadline added.");
-    };
-
-    $("dlClearAll").onclick = () => {
-      if (!confirm("Clear all deadlines?")) return;
-      state.deadlines = [];
-      saveState();
-    };
-
-    // ========= Roulette =========
-    let lastRoulette = null; // {type:'task'|'course', id, label}
-    $("rouletteSpin").onclick = () => spinRoulette();
-    $("rouletteTaskAdd").onclick = () => {
-      const text = $("rouletteTaskText").value.trim();
-      if (!text) return;
-      addTask(text, "");
-      $("rouletteTaskText").value = "";
-      toast("Added from roulette.");
-    };
-    $("rouletteMarkDone").onclick = () => {
-      if (!lastRoulette || lastRoulette.type !== "task") return toast("No task selected.");
-      const t = state.tasks.find(x => x.id === lastRoulette.id);
-      if (t) t.done = true;
-      saveState();
-      toast("Marked done.");
-    };
-
-    function spinRoulette() {
-      const undone = state.tasks.filter(t => !t.done);
-      if (undone.length) {
-        const choice = undone[Math.floor(Math.random() * undone.length)];
-        lastRoulette = { type:"task", id: choice.id, label: choice.text };
-        $("rouletteResult").textContent = choice.text;
-        $("rouletteTaskText").value = choice.text;
-        return;
-      }
-      if (state.courses.length) {
-        const c = state.courses[Math.floor(Math.random() * state.courses.length)];
-        lastRoulette = { type:"course", id: c.id, label: c.name };
-        $("rouletteResult").textContent = c.name;
-        $("rouletteTaskText").value = `Study ${c.name} for 30 minutes`;
-        return;
-      }
-      toast("Add tasks or courses first.");
-      $("rouletteResult").textContent = "—";
-      lastRoulette = null;
-    }
-
-    // ========= Weekly Review =========
-    $("reviewSave").onclick = () => {
-      state.weeklyReview = $("reviewText").value;
-      saveState();
-      $("reviewSaved").textContent = "Saved.";
-      setTimeout(()=> $("reviewSaved").textContent = "", 1200);
-    };
-
-    // ========= Export/Import/Wipe =========
-    $("exportBtn").onclick = () => {
-      const blob = new Blob([JSON.stringify(state, null, 2)], { type:"application/json" });
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = "student-dashboard.json";
-      a.click();
-      URL.revokeObjectURL(a.href);
-    };
-    $("importBtn").onclick = () => $("importFile").click();
-    $("importFile").addEventListener("change", async (e) => {
-      const f = e.target.files?.[0];
-      if (!f) return;
-      const text = await f.text();
-      try {
-        const parsed = JSON.parse(text);
-        state = { ...defaultState(), ...parsed };
-        saveState();
-        toast("Imported.");
-      } catch {
-        toast("Import failed (bad JSON).");
-      }
-      $("importFile").value = "";
-    });
-    $("wipeBtn").onclick = () => {
-      if (!confirm("Wipe all data?")) return;
-      state = defaultState();
-      saveState();
-    };
-
-    // ========= Render =========
-    function renderAll() {
-      renderCourses();
-      renderTop3();
-      renderTasks();
-      renderDeadlines();
-      renderHome();
-      renderReview();
-    }
-
-    function renderCourses() {
-      // fill selects
-      const courseSel = $("taskCourse");
-      const dlSel = $("dlCourse");
-      courseSel.innerHTML = `<option value="">Course (optional)</option>`;
-      dlSel.innerHTML = `<option value="">Course (optional)</option>`;
-      state.courses.forEach(c => {
-        const o1 = document.createElement("option");
-        o1.value = c.name; o1.textContent = c.name;
-        const o2 = o1.cloneNode(true);
-        courseSel.appendChild(o1);
-        dlSel.appendChild(o2);
-      });
-
-      // list
-      const ul = $("courseList");
-      ul.innerHTML = "";
-      state.courses.forEach(c => {
-        const li = document.createElement("li");
-        li.className = "item";
-        li.innerHTML = `
-          <div class="content">
-            <p class="title">${escapeHtml(c.name)}</p>
-            <div class="meta">Used for filtering + roulette</div>
-          </div>
-          <div class="right">
-            <button class="danger" data-del="${c.id}">Delete</button>
-          </div>
-        `;
-        li.querySelector("[data-del]").onclick = () => {
-          state.courses = state.courses.filter(x => x.id !== c.id);
-          // also detach from tasks/deadlines (optional: keep as-is)
-          saveState();
-        };
-        ul.appendChild(li);
-      });
-      $("statCourses").textContent = String(state.courses.length);
-    }
-
-    function renderTop3() {
-      $("statTop3").textContent = String(state.top3.filter(x=>x.done).length);
-      const ul = $("top3List");
-      ul.innerHTML = "";
-      state.top3.forEach(x => {
-        const li = document.createElement("li");
-        li.className = "item";
-        li.innerHTML = `
-          <input type="checkbox" ${x.done ? "checked" : ""} />
-          <div class="content">
-            <p class="title">${escapeHtml(x.text)}</p>
-            <div class="meta">${x.done ? "Done" : "Not done yet"}</div>
-          </div>
-          <div class="right">
-            <button class="danger">Delete</button>
-          </div>
-        `;
-        li.querySelector("input").onchange = (e) => { x.done = e.target.checked; saveState(); };
-        li.querySelector("button").onclick = () => { state.top3 = state.top3.filter(t => t.id !== x.id); saveState(); };
-        ul.appendChild(li);
-      });
-    }
-
-    function renderTasks() {
-      $("statTasks").textContent = String(state.tasks.length);
-      $("statDone").textContent = String(state.tasks.filter(t=>t.done).length);
-
-      const ul = $("taskList");
-      ul.innerHTML = "";
-      state.tasks.forEach(t => {
-        const li = document.createElement("li");
-        li.className = "item";
-        li.innerHTML = `
-          <input type="checkbox" ${t.done ? "checked" : ""} />
-          <div class="content">
-            <p class="title">${escapeHtml(t.text)}</p>
-            <div class="meta">${t.course ? "Course: " + escapeHtml(t.course) + " · " : ""}${new Date(t.createdAt).toLocaleString()}</div>
-          </div>
-          <div class="right">
-            <button class="danger">Delete</button>
-          </div>
-        `;
-        li.querySelector("input").onchange = (e) => { t.done = e.target.checked; saveState(); };
-        li.querySelector("button").onclick = () => { state.tasks = state.tasks.filter(x => x.id !== t.id); saveState(); };
-        ul.appendChild(li);
-      });
-    }
-
-    function renderDeadlines() {
-      $("statDeadlines").textContent = String(state.deadlines.length);
-
-      // sort by date
-      const sorted = [...state.deadlines].sort((a,b)=> a.dateISO.localeCompare(b.dateISO));
-      const ul = $("dlList");
-      ul.innerHTML = "";
-
-      sorted.forEach(d => {
-        const days = daysUntil(d.dateISO);
-        const li = document.createElement("li");
-        li.className = "item";
-        li.innerHTML = `
-          <div class="content">
-            <p class="title">${escapeHtml(d.title)}</p>
-            <div class="meta">
-              ${d.course ? "Course: " + escapeHtml(d.course) + " · " : ""}
-              Due: ${escapeHtml(d.dateISO)} · ${days >= 0 ? days + " day(s) left" : "Overdue"}
-            </div>
-          </div>
-          <div class="right">
-            <button class="danger">Delete</button>
-          </div>
-        `;
-        li.querySelector("button").onclick = () => { state.deadlines = state.deadlines.filter(x => x.id !== d.id); saveState(); };
-        ul.appendChild(li);
-      });
-
-      // countdown box
-      const upcoming = sorted.find(d => daysUntil(d.dateISO) >= 0);
-      if (!upcoming) {
-        $("countdownBox").textContent = "No upcoming deadlines.";
-        $("nextDeadline").textContent = "—";
-      } else {
-        const days = daysUntil(upcoming.dateISO);
-        $("countdownBox").textContent = `${upcoming.title} (${upcoming.dateISO})\n${days} day(s) left`;
-        $("nextDeadline").textContent = `${upcoming.title} · ${days} day(s) left`;
-      }
-    }
-
-    function renderHome() {
-      // show total morning-ish summary using top3 done count
-      $("statTop3").textContent = String(state.top3.filter(x=>x.done).length);
-    }
-
-    function renderReview() {
-      $("reviewText").value = state.weeklyReview || "";
-    }
-
-    function daysUntil(dateISO) {
-      // dateISO like "2026-03-11"
-      const target = new Date(dateISO + "T00:00:00");
-      const now = new Date();
-      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-      const diff = target - today;
-      return Math.round(diff / (1000*60*60*24));
-    }
-
-    function escapeHtml(s) {
-      return String(s).replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-    }
-  </script>
+  <script src="app.js"></script>
 </body>
 </html>
