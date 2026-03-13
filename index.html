@@ -7,13 +7,22 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <div class="bg">
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
+    <div class="orb orb-c"></div>
+    <div class="grain"></div>
+  </div>
+
   <header class="topbar">
-    <div class="wrap">
+    <div class="wrap topbar-inner">
       <div class="brand">
-        <div class="logo">⚡</div>
-        <div>
+        <div class="logo" aria-hidden="true">
+          <span class="logo-bolt">⚡</span>
+        </div>
+        <div class="brand-text">
           <div class="title">My Personal System</div>
-          <div class="subtitle">Pick a module. Run your day.</div>
+          <div class="subtitle">A modular dashboard for studying, training, and staying sane.</div>
         </div>
       </div>
 
@@ -25,30 +34,93 @@
   </header>
 
   <main class="wrap">
+    <section class="hero">
+      <div class="hero-left">
+        <div class="badge">Local Demo • No Sync</div>
+        <h1 class="hero-title">Your day, reduced to buttons.</h1>
+        <p class="hero-desc">
+          Pick a module. Log progress. Let the system do the remembering.
+          Later you can turn on Cloud Sync (phone + PC).
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn primary" href="html/student_dashboard.html">Open Student Dashboard</a>
+          <button id="heroQuick" class="btn ghost" type="button">Add a quick note</button>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat">
+            <div class="stat-num" id="statQuick">0</div>
+            <div class="stat-label">quick notes saved</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">6</div>
+            <div class="stat-label">modules ready</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">1</div>
+            <div class="stat-label">home hub</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="mini card-glass">
+          <div class="mini-head">
+            <div class="mini-title">Today</div>
+            <div class="mini-pill" id="todayPill">—</div>
+          </div>
+          <div class="mini-body">
+            <div class="mini-row">
+              <div class="mini-dot"></div>
+              <div class="mini-text">Top 3 priorities</div>
+              <div class="mini-tag">focus</div>
+            </div>
+            <div class="mini-row">
+              <div class="mini-dot"></div>
+              <div class="mini-text">Deadlines</div>
+              <div class="mini-tag">pressure</div>
+            </div>
+            <div class="mini-row">
+              <div class="mini-dot"></div>
+              <div class="mini-text">Gym PR tracker</div>
+              <div class="mini-tag">progress</div>
+            </div>
+          </div>
+          <div class="mini-foot muted">This box is just a visual preview.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-head">
+      <h2 class="section-title">Modules</h2>
+      <p class="section-sub">Each module is a page. You can add/remove modules per client.</p>
+    </section>
+
     <section class="grid">
-      <a class="card" href="student.html">
+      <a class="card card-glass" href="student.html">
         <div class="card-top">
           <div class="card-icon">🎓</div>
           <div class="card-title">Student Dashboard</div>
         </div>
         <div class="card-desc">
-          Top 3 priorities, tasks, deadlines, study roulette, weekly review.
+          Top 3, tasks, deadlines, roulette, and weekly review.
         </div>
         <div class="card-meta">Open →</div>
       </a>
 
-      <a class="card" href="gym.html">
+      <a class="card card-glass" href="gym.html">
         <div class="card-top">
           <div class="card-icon">💪</div>
           <div class="card-title">Gym Tracker</div>
         </div>
         <div class="card-desc">
-          PRs, sessions, streaks, notes. Keep score, get stronger.
+          PRs, sessions, streaks, notes. Keep score.
         </div>
         <div class="card-meta">Open →</div>
       </a>
 
-      <a class="card" href="todo.html">
+      <a class="card card-glass" href="todo.html">
         <div class="card-top">
           <div class="card-icon">✅</div>
           <div class="card-title">To-do + Today</div>
@@ -59,18 +131,18 @@
         <div class="card-meta">Open →</div>
       </a>
 
-      <a class="card" href="mornings.html">
+      <a class="card card-glass" href="mornings.html">
         <div class="card-top">
           <div class="card-icon">🌅</div>
           <div class="card-title">Mornings Routine</div>
         </div>
         <div class="card-desc">
-          Morning checklist + notes. Start the day without thinking.
+          Morning checklist + notes. Start without thinking.
         </div>
         <div class="card-meta">Open →</div>
       </a>
 
-      <a class="card" href="words.html">
+      <a class="card card-glass" href="words.html">
         <div class="card-top">
           <div class="card-icon">🗒️</div>
           <div class="card-title">Words / Quotes</div>
@@ -81,25 +153,30 @@
         <div class="card-meta">Open →</div>
       </a>
 
-      <a class="card disabled" href="#" aria-disabled="true">
+      <a class="card card-glass disabled" href="#" aria-disabled="true">
         <div class="card-top">
           <div class="card-icon">🧩</div>
           <div class="card-title">Custom Module</div>
         </div>
         <div class="card-desc">
-          Placeholder for anything: water tracker, pomodoro, reading log, etc.
+          Water tracker, pomodoro, reading log, anything.
         </div>
         <div class="card-meta">Coming soon</div>
       </a>
     </section>
 
-    <section class="panel">
-      <div class="panel-title">Quick Capture</div>
-      <div class="panel-desc">Add a quick note/task for later. (Local demo storage)</div>
+    <section class="panel card-glass" id="quickPanel">
+      <div class="panel-top">
+        <div>
+          <div class="panel-title">Quick Capture</div>
+          <div class="panel-desc">Drop a note or task. Your brain can stop holding it.</div>
+        </div>
+        <div class="hint muted">Shortcut: <span class="kbd">/</span></div>
+      </div>
 
       <div class="row">
         <input id="quickInput" class="input" placeholder="Type something... (e.g., finish calculus HW)" />
-        <button id="quickSave" class="btn" type="button">Save</button>
+        <button id="quickSave" class="btn primary" type="button">Save</button>
       </div>
 
       <ul id="quickList" class="list"></ul>
@@ -110,8 +187,8 @@
     </section>
 
     <footer class="footer">
-      <span class="muted">Tip: press <span class="kbd">/</span> to focus Quick Capture.</span>
-      <span class="muted">Local-only demo. Cloud sync comes later.</span>
+      <span class="muted">Public link is fine. Real privacy comes from login + database rules when you enable Cloud Sync.</span>
+      <span class="muted">Built with HTML/CSS/JS.</span>
     </footer>
   </main>
 
